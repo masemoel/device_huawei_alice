@@ -786,11 +786,10 @@ service hw_charger /sbin/hw_healthd -c
     disabled
 
 service ril-daemon /system/bin/rild
-    class core
+    class late_start
     socket rild stream 660 root radio
     socket rild-ims stream 660 root radio
     socket rildm2 stream 660 root radio
-    socket sap_uim_socket1 stream 660 bluetooth bluetooth
     socket rild-debug stream 660 radio system
     socket rild-debug1 stream 660 radio system
     user root
