@@ -1,8 +1,5 @@
-ro.sf.lcd_density=320
-ro.opengles.version=131072
-ro.config.ipv4.mtu=1400
-net.tethering.noprovisioning=true
-ro.hardware.alter=HiSilicon Kirin 620
+# ADB
+persist.sys.adb.shell=/system/xbin/bash
 
 # ART
 dalvik.vm.dex2oat-swap=false
@@ -14,6 +11,9 @@ ro.config.vc_call_vol_steps=7
 
 # Camera
 camera2.portability.force_api=1
+camera.hal1.packagelist=com.google.android.GoogleCamera
+media.stagefright.legacyencoder=true
+media.stagefright.less-secure=true
 ro.camera.beauty.algo.doc=1
 ro.hwcamera.use.videosize.1080p=true
 ro.hwcamera.previeweffects=true
@@ -24,14 +24,22 @@ persist.camera.cpp.duplication=false
 ro.connectivity.sta_p2p_coex=false
 wifi.interface=wlan0
 
+# Display
+ro.sf.lcd_density=320
+ro.opengles.version=131072
+
 # Media
 media.stagefright.use-awesome=false
+persist.media.treble_omx=false
+
+# Misc
+ro.config.ipv4.mtu=1400
+ro.hardware.alter=HiSilicon Kirin 620
 
 # Performance
+debug.sf.latch_unsignaled=1
 ro.am.reschedule_service=true
 ro.config.enable_rcc=true
-
-debug.sf.latch_unsignaled=1
 
 # RIL
 audioril.lib=libhuawei-audio-ril.so
@@ -44,17 +52,17 @@ ro.huaweiril=true
 persist.sys.signal.level=openkirin
 ro.build.version.emui=EmotionUI_4.1
 
-# Tethering
-persist.sys.usb.config.extra=none
-
-# Make sdcards visibile in StorageManager
+# SDcard visibile in StorageManager
 persist.sys.adoptable_fbe=true
 
-# adb
-persist.sys.adb.shell=/system/xbin/bash
+# Tethering
+net.tethering.noprovisioning=true
+persist.sys.usb.config.extra=none
 
 # USB debugging
 persist.sys.usb.config=mtp,adb
 ro.adb.secure=0
-ro.secure=0
 ro.debuggable=1
+ro.magic.api.version=0.1
+ro.secure=0
+security.perf_harden=0

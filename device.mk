@@ -150,14 +150,6 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-service \
     camera.device@3.2-impl
 
-# Camera props
-PRODUCT_PROPERTY_OVERRIDES += \
-    camera.disable_treble=1
-
-# Default OMX service to non-Treble
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.media.treble_omx=false
-
 # Keymaster
 PRODUCT_PACKAGES += \
     android.hardware.keymaster@3.0-impl \
@@ -243,13 +235,6 @@ PRODUCT_PACKAGES += \
     libshim_icu \
     libshim_log \
     libshim_gui
-
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    ro.magic.api.version=0.1 \
-    persist.sys.usb.config=mtp \
-    ro.secure=0 \
-    security.perf_harden=0 \
-    ro.adb.secure=0
 
 PRODUCT_PACKAGES += \
     busybox \
