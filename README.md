@@ -1,4 +1,44 @@
-@Copyright 2019 - The LineageOS Project
+# LineageOS 14.1 for the Huawei P8 Lite (alice)
+
+# Sources needed
+### Kernel
+This device tree is intended to be used with this kernel repo:
+
+https://github.com/masemoel/kernel_huawei_hi6210sft
+
+branch: cm-14.1
+### Vendor
+This device tree is intented to be used with this vendor repo
+
+https://github.com/masemoel/vendor_huawei_alice
+
+branch: cm-14.1
+
+# How To Prepare the dtree to build
+
+Now you will want to apply the repo patches. These patches modify code in the ROM to work with this device.
+Execute the following commands in a linux terminal:
+NOTE: you have to run the chmod command if you have some issues on the script 
+```bash
+cd /home/$USER/los/device/huawei/alice/patches
+chmod a+x 'apply.sh'
+cd /home/$USER/los
+./device/huawei/alice/patches/apply.sh
+```
+NOTE: If you are going to be offline while you are building, you will need download some prebuilts first.
+```bash
+cd /home/$USER/los
+make fetchprebuilts
+```
+NOTE: Now you have everything that you need to build LineageOS 14 for your Huawei P8 Lite. 
+It may take anywhere from 2 hours to 15 hours depending on system specs for a complete build.
+Execute the following commands in a linux terminal:
+```bash
+cd /home/$USER/los
+. build/envsetup.sh
+lunch lineage_alice-userdebug
+mka bacon
+```
 
 Huawei P8Lite detailed specifications:
 ======================================
@@ -25,7 +65,7 @@ Radio	      |FM radio
 USB	      |microUSB v2.0
 Sensors	      |Accelerometer, proximity, compass
 Battery	      |Non-removable Li-Ion 2200 mAh battery
-Colors	      |Black, White, Gold
+Colors 	      |Black, White, Gold
 
 
 ![Huawei P8Lite](http://cdn2.gsmarena.com/vv/pics/huawei/huawei-p8-lite.jpg "Huawei P8Lite")
