@@ -30,15 +30,28 @@ TARGET_2ND_CPU_VARIANT := cortex-a53
 TARGET_BOARD_GPU := mali-450mp
 
 TARGET_USES_64_BIT_BINDER := true
+TARGET_IS_64_BIT := true
+TARGET_SUPPORTS_32_BIT_APPS := true
+TARGET_SUPPORTS_64_BIT_APPS := true
 
 TARGET_BOARD_PLATFORM := hi6210sft
 BOARD_VENDOR_PLATFORM := hi6210sft
+
+TARGET_CPU_SMP := true
+ARCH_ARM_HAVE_TLS_REGISTER := true
+ARCH_ARM_HAVE_NEON := true
+ARCH_ARM_HIGH_OPTIMIZATION := true
+
+# Enable CPUSETS
+ENABLE_CPUSETS := true
 
 # Assert
 TARGET_OTA_ASSERT_DEVICE := hi6210sft,alice
 
 # Audio
 BOARD_USES_ALSA_AUDIO := true
+TARGET_PROVIDES_LIBAUDIO := true
+BOARD_USES_GENERIC_AUDIO := false
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := hi6210sft
@@ -57,12 +70,12 @@ TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 USE_DEVICE_SPECIFIC_CAMERA := true
 TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
+TARGET_USES_MEDIA_EXTENSIONS := true
 
 # Charger
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
 BOARD_RECOVERY_NEEDS_FBIOPAN_DISPLAY := true
 BACKLIGHT_PATH := /sys/class/leds/lcd_backlight0/brightness
-BOARD_HEALTHD_CUSTOM_CHARGER_RES := $(LOCAL_PATH)/charger/images
 
 # CMHW
 BOARD_HARDWARE_CLASS := \
@@ -79,18 +92,23 @@ ifeq ($(HOST_OS),linux)
   endif
 endif
 
+### FONTS
+EXTENDED_FONT_FOOTPRINT := true
+
 # Display
+USE_OPENGL_RENDERER := true
+TARGET_HARDWARE_3D := true
+ANDROID_ENABLE_RENDERSCRIPT := true
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 TARGET_USES_ION := true
 
-# DT2W Node
-TARGET_TAP_TO_WAKE_NODE := "/sys/touchscreen/easy_wakeup_gesture"
-
-# Enable CPUSETS
-ENABLE_CPUSETS := true
-
 # GPS
 USE_DEVICE_SPECIFIC_GPS := true
+TARGET_NO_RPC := true
+
+# NFC
+BOARD_NFC_CHIPSET := pn547
+NXP_CHIP_TYPE := 1
 
 # Kernel
 BOARD_KERNEL_BASE := 0x07478000
@@ -109,11 +127,6 @@ TARGET_PROVIDES_LIBLIGHT := true
 
 # Malloc
 MALLOC_SVELTE := true
-
-# NFC
-BOARD_NFC_CHIPSET := pn547
-NXP_CHIP_TYPE := 1
-TARGET_USES_NQ_NFC := true
 
 # Partitions
 BOARD_HAS_LARGE_FILESYSTEM := true
@@ -139,12 +152,22 @@ BOARD_RIL_CLASS := ../../../device/huawei/alice/ril
 PROTOBUF_SUPPORTED := true
 SIM_COUNT := 2
 
+# Optimizations 
+O3_OPTS := true
+GRAPHITE_OPTS := true
+
+# Enable WEBGL
+ENABLE_WEBGL := true
+
+#DT2W Node
+TARGET_TAP_TO_WAKE_NODE := "/sys/touchscreen/easy_wakeup_gesture"
+
 # Vendor Init
 TARGET_UNIFIED_DEVICE := true
 TARGET_INIT_VENDOR_LIB := libinit_hi6210sft
 TARGET_LIBINIT_DEFINES_FILE := $(DEVICE_PATH)/init/init_alice.cpp
 
-# Wi-Fi
+# Wifi
 TARGET_USES_64_BIT_BCMDHD	 := true
 BOARD_WLAN_DEVICE                := bcmdhd
 BOARD_WLAN_DEVICE_REV            := bcm4343
@@ -163,5 +186,9 @@ WIFI_BAND                        := 802_11_ABG
 BOARD_SEPOLICY_DIRS += \
 	device/huawei/alice/sepolicy
 
-# Inherit from the proprietary version
-include vendor/huawei/alice/BoardConfigVendor.mk
+#OMX
+TARGET_USES_COLOR_METADATA := true
+TARGET_USE_COLOR_MANAGEMENT := true
+
+# inherit from the proprietary version
+-include vendor/huawei/alice/BoardConfigVendor.mk
