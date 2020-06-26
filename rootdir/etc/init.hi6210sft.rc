@@ -58,6 +58,9 @@ on init
 
     symlink /dev/block/platform/f723d000.dwmmc0 /dev/block/platform/hi_mci.0
 
+    mkdir /dev/frz
+    mount cgroup none /dev/frz freezer
+
     chown logd system /dev/hwlog_switch
     chmod 0660 /dev/hwlog_switch
 
@@ -101,6 +104,19 @@ on init
     chmod 0660 /dev/ttyAMA0
     chown media media /dev/anc_hs
     chmod 0660 /dev/anc_hs
+
+    mkdir /sys/fs/cgroup/pids 0750 root system
+    mount cgroup none /sys/fs/cgroup/pids pids
+    mkdir /sys/fs/cgroup/pids/unconfirm_app 0750 root system
+    chown root system /sys/fs/cgroup/pids/unconfirm_app/cgroup.procs
+    chmod 0660 /sys/fs/cgroup/pids/unconfirm_app/cgroup.procs
+    chown root system /sys/fs/cgroup/pids/unconfirm_app/tasks
+    chmod 0660 /sys/fs/cgroup/pids/unconfirm_app/tasks
+    chown root system /sys/fs/cgroup/pids/unconfirm_app/pids.group_limit
+    chmod 0660 /sys/fs/cgroup/pids/unconfirm_app/pids.group_limit
+    chown root system /sys/fs/cgroup/pids/unconfirm_app/cgroup.event_control
+    chmod 0220 /sys/fs/cgroup/pids/unconfirm_app/cgroup.event_control
+    chmod 0220 /sys/fs/cgroup/pids/cgroup.event_control
 
     chown system system /dev/memory_throughput
     chown system system /sys/class/devfreq/ddrfreq/ddr_bandwidth
@@ -201,6 +217,14 @@ on fs
     restorecon /sys/class/graphics/fb0/lcd_cabc_mode
     restorecon /sys/class/leds/torch/flash_thermal_protect	
 
+#Enable logcat service logger
+service logger /system/bin/logcat -b all -D -f /cache/boot_log.txt
+    class main
+    user root
+    group root system
+    disabled
+    oneshot
+
 on post-fs
     chown system system /splash2
     chmod 0775 /splash2
@@ -234,6 +258,10 @@ on post-fs
     chmod 0440 /dev/log/main_boot
     chmod 0440 /dev/log/system_boot
     chmod 0440 /dev/log/radio_boot	
+
+    # Clear existing log and start the service
+    rm /cache/boot_log.txt
+    start logger
 
 on post-fs-data
     mkdir /data/nfc 0755 nfc nfc
@@ -406,24 +434,10 @@ on boot
     chmod 0444 /sys/bus/i2c/devices/0-0028/rd_nfc_sim_status
     chown nfc nfc /sys/bus/i2c/devices/0-0028/nfc_enable_status
     chmod 0664 /sys/bus/i2c/devices/0-0028/nfc_enable_status
-    chown nfc nfc /sys/bus/i2c/devices/0-0028/nfc_card_num
-    chmod 0444 /sys/bus/i2c/devices/0-0028/nfc_card_num
     chown nfc nfc /sys/bus/i2c/devices/0-0028/nfc_chip_type
     chmod 0444 /sys/bus/i2c/devices/0-0028/nfc_chip_type
     chown system system /sys/bus/i2c/devices/0-0028/nfc_fw_version
     chmod 0444 /sys/bus/i2c/devices/0-0028/nfc_fw_version
-    chown nfc nfc /sys/bus/i2c/devices/0-0028/nfcservice_lock
-    chmod 0664 /sys/bus/i2c/devices/0-0028/nfcservice_lock
-    chown nfc nfc /sys/bus/i2c/devices/0-0028/nfc_svdd_sw
-    chmod 0664 /sys/bus/i2c/devices/0-0028/nfc_svdd_sw
-    chown nfc nfc /sys/bus/i2c/devices/0-0028/nfc_close_type
-    chmod 0664 /sys/bus/i2c/devices/0-0028/nfc_close_type
-    chown nfc nfc /sys/bus/i2c/devices/0-0028/nfc_single_channel
-    chmod 0444 /sys/bus/i2c/devices/0-0028/nfc_single_channel
-    chown system nfc /sys/bus/i2c/devices/0-0028/nfc_age_test_flag_state
-    chmod 0640 /sys/bus/i2c/devices/0-0028/nfc_age_test_flag_state
-    chown system system /dev/pn544
-    chmod 0666 /dev/pn544
 
     chown system system /sys/class/leds/lcd_backlight0/brightness
     chmod 644 /sys/class/leds/lcd_backlight0/brightness
@@ -758,11 +772,6 @@ on property:ro.config.enable_rcc=true
     chown system system /sys/kernel/rcc/stat
     write /proc/sys/vm/page-cluster 0
     write /sys/kernel/rcc/enable 1
-    exec /system/bin/swapoff /dev/block/zram0
-    write /sys/block/zram0/reset 1
-    write /sys/block/zram0/comp_algorithm lz4
-    write /sys/block/zram0/disksize 512MB
-    swapon_all fstab.zram512m
 
 on charger
     chown system system /sys/class/android_usb/android0/switch_request
@@ -804,6 +813,9 @@ on property:rild.rild1_ready_to_start=true
 
 on property:rild.rild1_ready_to_start=false
     symlink /dev/socket/rildm2 /dev/socket/rild2
+
+    # Stop logcat logger service
+    stop logger
 
 service hi110x_ecpt /system/bin/hi110x_except_logd -wbg -p /data/hwlogdir/exception/ -n 30 -c
     class late_start
