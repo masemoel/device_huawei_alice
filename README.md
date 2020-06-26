@@ -6,13 +6,13 @@ This device tree is intended to be used with this kernel repo:
 
 https://github.com/masemoel/kernel_huawei_hi6210sft
 
-branch: cm-14.1
+branch: 7.x
 ### Vendor
 This device tree is intented to be used with this vendor repo
 
 https://github.com/masemoel/vendor_huawei_alice
 
-branch: cm-14.1
+branch: 7.x
 
 # How To Prepare the dtree to build
 
