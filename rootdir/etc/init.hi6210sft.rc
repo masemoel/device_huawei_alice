@@ -217,14 +217,6 @@ on fs
     restorecon /sys/class/graphics/fb0/lcd_cabc_mode
     restorecon /sys/class/leds/torch/flash_thermal_protect	
 
-#Enable logcat service logger
-service logger /system/bin/logcat -b all -D -f /cache/boot_log.txt
-    class main
-    user root
-    group root system
-    disabled
-    oneshot
-
 on post-fs
     chown system system /splash2
     chmod 0775 /splash2
@@ -257,11 +249,7 @@ on post-fs
     chmod 0440 /proc/kmsg_boot
     chmod 0440 /dev/log/main_boot
     chmod 0440 /dev/log/system_boot
-    chmod 0440 /dev/log/radio_boot	
-
-    # Clear existing log and start the service
-    rm /cache/boot_log.txt
-    start logger
+    chmod 0440 /dev/log/radio_boot
 
 on post-fs-data
     mkdir /data/nfc 0755 nfc nfc
@@ -434,10 +422,24 @@ on boot
     chmod 0444 /sys/bus/i2c/devices/0-0028/rd_nfc_sim_status
     chown nfc nfc /sys/bus/i2c/devices/0-0028/nfc_enable_status
     chmod 0664 /sys/bus/i2c/devices/0-0028/nfc_enable_status
+    chown nfc nfc /sys/bus/i2c/devices/0-0028/nfc_card_num
+    chmod 0444 /sys/bus/i2c/devices/0-0028/nfc_card_num
     chown nfc nfc /sys/bus/i2c/devices/0-0028/nfc_chip_type
     chmod 0444 /sys/bus/i2c/devices/0-0028/nfc_chip_type
     chown system system /sys/bus/i2c/devices/0-0028/nfc_fw_version
     chmod 0444 /sys/bus/i2c/devices/0-0028/nfc_fw_version
+    chown nfc nfc /sys/bus/i2c/devices/0-0028/nfcservice_lock
+    chmod 0664 /sys/bus/i2c/devices/0-0028/nfcservice_lock
+    chown nfc nfc /sys/bus/i2c/devices/0-0028/nfc_svdd_sw
+    chmod 0664 /sys/bus/i2c/devices/0-0028/nfc_svdd_sw
+    chown nfc nfc /sys/bus/i2c/devices/0-0028/nfc_close_type
+    chmod 0664 /sys/bus/i2c/devices/0-0028/nfc_close_type
+    chown nfc nfc /sys/bus/i2c/devices/0-0028/nfc_single_channel
+    chmod 0444 /sys/bus/i2c/devices/0-0028/nfc_single_channel
+    chown system nfc /sys/bus/i2c/devices/0-0028/nfc_age_test_flag_state
+    chmod 0640 /sys/bus/i2c/devices/0-0028/nfc_age_test_flag_state
+    chown system system /dev/pn544
+    chmod 0666 /dev/pn544
 
     chown system system /sys/class/leds/lcd_backlight0/brightness
     chmod 644 /sys/class/leds/lcd_backlight0/brightness
@@ -813,9 +815,6 @@ on property:rild.rild1_ready_to_start=true
 
 on property:rild.rild1_ready_to_start=false
     symlink /dev/socket/rildm2 /dev/socket/rild2
-
-    # Stop logcat logger service
-    stop logger
 
 service hi110x_ecpt /system/bin/hi110x_except_logd -wbg -p /data/hwlogdir/exception/ -n 30 -c
     class late_start
