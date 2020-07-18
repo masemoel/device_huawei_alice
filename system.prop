@@ -22,6 +22,8 @@ sys.refresh.dirty=1
 qemu.hw.mainkeys=0
 
 # Camera
+media.stagefright.legacyencoder=true
+media.stagefright.less-secure=true
 ro.camera.beauty.algo.doc=1
 ro.hwcamera.use.videosize.1080p=true
 ro.hwcamera.previeweffects=true
@@ -76,6 +78,7 @@ ro.config.hw_perfhub=true
 ro.product.platform.pseudonym=1ARB9CV
 persist.sys.jankenable=true
 debug.sf.latch_unsignaled=1
+ro.com.android.mobiledata=false
 
 # Graphics
 ro.bq.gpu_to_cpu_unsupported=1
