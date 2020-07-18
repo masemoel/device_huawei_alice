@@ -283,7 +283,11 @@ Only the three quirks included above are recognized at this point:
             <Feature name="secure-playback" required="true" />
             <Limit name="concurrent-instances" max="6" />
         </MediaCodec>
-    </Decoders>
+        <MediaCodec name="OMX.ffmpeg.h264.decoder" type="video/avc">
+            <Limit name="size" min="1088x1920" max="2048x2048" />
+            <Limit name="alignment" value="2x2" />
+        </MediaCodec>
+     </Decoders>
 
     <Settings>
     <Setting name="max-video-encoder-input-buffers" value="5" />
