@@ -18,3 +18,5 @@
 sh device/huawei/alice/patches/apply.sh;
 
 add_lunch_combo lineage_alice-userdebug
+add_lunch_combo lineage_alice-user
+add_lunch_combo lineage_alice-eng
