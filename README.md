@@ -1,13 +1,17 @@
 crDroid 3.8.9 for the Huawei P8 Lite (alice)
 
+![crDroid](https://camo.githubusercontent.com/66222527ac34ef135635339adaa9352a479ba331/68747470733a2f2f637264726f69642e6e65742f696d672f6c6f676f2e706e67 "crDroid")
+
 # Sources needed
 -> Kernel
+
 This device tree is intended to be used with this kernel repo:
 
 https://github.com/masemoel/kernel_huawei_hi6210sft
 
 branch: 7.x
 -> Vendor
+
 This device tree is intented to be used with this vendor repo
 
 https://github.com/masemoel/vendor_huawei_alice
@@ -50,6 +54,5 @@ USB	      |microUSB v2.0
 Sensors	      |Accelerometer, proximity, compass
 Battery	      |Non-removable Li-Ion 2200 mAh battery
 Colors 	      |Black, White, Gold
-
 
 ![Huawei P8Lite](http://cdn2.gsmarena.com/vv/pics/huawei/huawei-p8-lite.jpg "Huawei P8Lite")
