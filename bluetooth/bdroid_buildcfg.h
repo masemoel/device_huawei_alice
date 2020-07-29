@@ -17,7 +17,7 @@
 #ifndef _BDROID_BUILDCFG_H
 #define _BDROID_BUILDCFG_H
 
-#define BTM_DEF_LOCAL_NAME   "Huawei P8 Lite"
+#define BTM_DEF_LOCAL_NAME   "crDroid 3.8.9 for alice"
 
 #define BLE_INCLUDED TRUE
 
