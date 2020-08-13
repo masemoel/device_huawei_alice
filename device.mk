@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-$(call inherit-product-if-exists, vendor/huawei/alice/alice-vendor.mk)
+$(call inherit-product, vendor/huawei/alice/alice-vendor.mk)
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
@@ -113,11 +113,24 @@ PRODUCT_PACKAGES += \
 
 # KEYPAD
 PRODUCT_PACKAGES += \
+    cyttsp5_mt.kl \
     usbaudio.kl
 
-# Graphics
+# Hardware
 PRODUCT_PACKAGES += \
-    hwcomposer.hi6210sft
+    power.hi6210sft \
+    hwcomposer.hi6210sft \
+    libcopybit_wrapper \
+    lights.hi6210sft \
+    libshim
+
+# LibShim
+PRODUCT_PACKAGES += \
+    libshim_camera \
+    libshim_gui \
+    libshim_icu \
+    libshim_log \
+    libshim_wvm
 
 # Ramdisk
 PRODUCT_PACKAGES += \
