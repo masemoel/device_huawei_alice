@@ -187,5 +187,8 @@ BOARD_SEPOLICY_DIRS += \
 TARGET_USES_COLOR_METADATA := true
 TARGET_USE_COLOR_MANAGEMENT := true
 
+# Surfaceflinger
+NUM_FRAMEBUFFER_SURFACE_BUFFERS := 6
+
 # inherit from the proprietary version
 -include vendor/huawei/alice/BoardConfigVendor.mk
