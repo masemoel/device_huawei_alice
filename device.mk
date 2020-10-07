@@ -41,6 +41,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilts/camera_resolutions.cfg:system/etc/camera_resolutions.cfg \
     $(LOCAL_PATH)/prebuilts/camera_videosnapshot.cfg:system/etc/camera_videosnapshot.cfg
 
+PRODUCT_PACKAGES += \
+    FootejCamera2
+
 # GPS
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilts/clatd.conf:system/etc/clatd.conf \
