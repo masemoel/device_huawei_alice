@@ -12,18 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-$(call inherit-product, $(LOCAL_PATH)/full_alice.mk)
+# Inherit from those products. Most specific first.
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/locales_full.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_m.mk)
 
-# Inherit some common LineageOS stuff.
+# Inherit device-specific configurations.
+$(call inherit-product, $(LOCAL_PATH)/device.mk)
+
+# Inherit some common crDroid stuff.
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
-
-LINEAGE_BUILDTYPE = DarkJoker360
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 1280
 TARGET_SCREEN_WIDTH := 720
 
+# Device identifier. This must come after all inclusions
 PRODUCT_NAME := lineage_alice
+PRODUCT_DEVICE := alice
+PRODUCT_BRAND := Huawei
+PRODUCT_MANUFACTURER := Huawei
+PRODUCT_MODEL := Huawei P8 Lite
 
 PRODUCT_GMS_CLIENTID_BASE := android-huawei
 

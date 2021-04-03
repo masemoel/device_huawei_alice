@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 
+# Inherit Huawei proprietary files
 $(call inherit-product, vendor/huawei/alice/alice-vendor.mk)
 
 # Android GO configurations

@@ -1,105 +1,44 @@
-# LineageOS 15.1 for the Huawei P8 Lite (alice)
+![crDroid](https://camo.githubusercontent.com/66222527ac34ef135635339adaa9352a479ba331/68747470733a2f2f637264726f69642e6e65742f696d672f6c6f676f2e706e67 "crDroid")
+
+crDroid 4.7.2 for Huawei P8 Lite (alice)
 
 # Sources needed
-### Kernel
+--> Kernel <--
+
 This device tree is intended to be used with this kernel repo:
 
-See: https://github.com/DarkJoker360/android_kernel_huawei_alice
+https://github.com/masemoel/kernel_huawei_hi6210sft
 
-branch: lineage-15.1
-### Vendor
-This device tree is intented to be used with this vendor repo
+branch: crDroid-O
 
-https://github.com/DarkJoker360/android_vendor_huawei_alice
+--> Vendor <--
 
-branch: lineage-15.1
+This device tree is intented to be used with this vendor repo:
 
-# How To Build
+https://github.com/masemoel/vendor_huawei_alice
 
-### Step 1: Setting up the Build Environment.
+branch: crDroid-O
 
-You'll need Linux to be able to build LineageOS 15.1. You have three choices here; you can:
+--> Manifest <--
 
-1. Install Linux natively on your computer.
-2. Dual boot Linux and Windows.
-3. Use virtual machine software ( virtual box, vmware ) to run linux.
+I built crDroid with this manifest:
 
-NOTE: I recommend you use Ubuntu 14.04 LTS to build. That's what I use.
+https://github.com/masemoel/local_manifests/blob/master/alice_o.xml
 
-Now read this: http://source.android.com/source/initializing.html
-
-NOTE: When I say "read", I mean read and comprehend.
-
-### Step 2: Downloading the Source.
-
-NOTE: Some say that it is better to download the ROM source and put in your local manifest later. I don't know if that's best but that's what we are going to do.
-
-BEFORE YOU BEGIN: You are about to start downloading 15 - 20 Gigs of data. That could take a very long time, so plan accordingly. I like to start just before I go to sleep and let it 
-go overnight! If you have to work, perhaps start it before work and let it go through out the day.
-
-Execute the following commands in a linux terminal:
+For the first time building, run the following command to apply the patches:
 ```bash
-mkdir /home/$USER/los
-cd /home/$USER/los
-repo init -u git://github.com/LineageOS/android.git -b lineage-15.1
-repo sync
-```
-WARNING: There may be times, towards the end when it seem like, the download is stuck and not making any progress because there are no updates on the screen. BE PATIENT!, open a 
-program that will show how much bandwidth you are using to be sure!
-
-### Step 3: Set up local manifest.
-
-The local manifest is different for every device. It contains those repos that are device specific, where as the ROM code you just "repo sync'd" is code that is general to any device.
-
-Execute the following commands in a linux terminal:
-```bash
-mkdir /home/$USER/los/.repo/local_manifests
-gedit /home/$USER/los/.repo/local_manifests/alice.xml
-```
-Copy the following into alice.xml, save and close.
-```bash
-<?xml version="1.0" encoding="UTF-8"?>
-<manifest>
-  <project name="DarkJoker360/android_kernel_huawei_alice" path="kernel/huawei/alice" remote="github" revision="lineage-15.1"/>
-  <project name="DarkJoker360/android_device_huawei_alice" path="device/huawei/alice" remote="github" revision="lineage-15.1"/>
-  <project name="DarkJoker360/android_vendor_huawei_alice" path="vendor/huawei/alice" remote="github" revision="lineage-15.1"/>
-</manifest>
-```
-
-Execute the following commands in a linux terminal:
-```bash
-cd /home/$USER/los
-repo sync
-```
-
-NOTE: Yes we are syncing again and No, it shouldn't take quite as long. Every time you repo sync just new data is downloaded. So we are downloading the 4 repo's we just put in and any 
-updates that may have occured to the repo's we already have.
-
-### Step 4: Building
-
-Now you will want to apply the repo patches. These patches modify code in the ROM to work with this device.
-Execute the following commands in a linux terminal:
-NOTE: you have to run the chmod command if you have some issues on the script 
-```bash
-cd /home/$USER/los
 ./device/huawei/alice/patches/patches.sh
 ```
-NOTE: If you are going to be offline while you are building, you will need download some prebuilts first.
+
+# How to build
+Download crDroid's source and alice's required stuff (see my attached manifest). Then go to the source folder and run:
+
 ```bash
-cd /home/$USER/los
-make fetchprebuilts
-```
-NOTE: Now you have everything that you need to build LineageOS 14 for your Huawei P8 Lite. 
-It may take anywhere from 5 hours to 15 hours depending on system specs for a complete build.
-Execute the following commands in a linux terminal:
-```bash
-cd /home/$USER/los
 . build/envsetup.sh
-lunch lineage_alice-userdebug
-mka bacon
+brunch alice
 ```
 
-Huawei P8Lite detailed specifications:
+Huawei P8 Lite specifications:
 ======================================
 
 Basic         |Spec Sheet
@@ -125,6 +64,5 @@ USB	      |microUSB v2.0
 Sensors	      |Accelerometer, proximity, compass
 Battery	      |Non-removable Li-Ion 2200 mAh battery
 Colors 	      |Black, White, Gold
-
 
 ![Huawei P8Lite](http://cdn2.gsmarena.com/vv/pics/huawei/huawei-p8-lite.jpg "Huawei P8Lite")
