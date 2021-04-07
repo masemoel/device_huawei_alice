@@ -76,4 +76,8 @@ persist.sys.adoptable_fbe=true
 # adb
 persist.sys.adb.shell=/system/xbin/bash
 
-
+# USB debugging
+persist.sys.usb.config=mtp,adb
+ro.adb.secure=0
+ro.secure=0
+ro.debuggable=1
