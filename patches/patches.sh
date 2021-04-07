@@ -40,7 +40,12 @@ patch -p1 < $THIS_DIR/packages/apps/Camera2/0001-Fix-flashlight-delay.patch
 cd ../../services/Telephony
 patch -p1 < $THIS_DIR/packages/services/Telephony/0001-Telephony-Support-muting-by-RIL-command.patch
 cd $ROOTDIR
-
+cd frameworks/av
+patch -p1 < $THIS_DIR/frameworks/av/0001-FIH-devices-Fix-Earpiece-audio-output.patch
+cd $ROOTDIR
+cd frameworks/opt/telephony
+patch -p1 < $THIS_DIR/frameworks/opt/telephony/0001-RIL-Allow-overriding-RadioResponse-and-RadioIndicati.patch
+cd $ROOTDIR
 cd vendor/lineage
 git fetch https://github.com/DarkJoker360/android_vendor_lineage
 git cherry-pick ffaaece5655263f5db69e65e68bed9d3bbca546e
