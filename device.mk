@@ -267,10 +267,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     vndk-sp
 
-PRODUCT_PACKAGES += \
-    Jelly \
-    Calendar
-
 # TextClassifier smart selection model files
 PRODUCT_PACKAGES += \
     textclassifier.smartselection.bundle1
