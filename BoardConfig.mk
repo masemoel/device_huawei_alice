@@ -70,6 +70,16 @@ BOARD_CHARGER_DISABLE_INIT_BLANK := true
 BOARD_RECOVERY_NEEDS_FBIOPAN_DISPLAY := true
 BACKLIGHT_PATH := /sys/class/leds/lcd_backlight0/brightness
 
+# Dexpreopt
+ifeq ($(HOST_OS),linux)
+  ifneq ($(TARGET_BUILD_VARIANT),eng)
+    ifeq ($(WITH_DEXPREOPT),)
+      WITH_DEXPREOPT := true
+      WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY := true
+    endif
+  endif
+endif
+
 # Display
 USE_OPENGL_RENDERER := true
 TARGET_HARDWARE_3D := true
@@ -81,15 +91,6 @@ TARGET_USES_ION := true
 TARGET_USE_PAN_DISPLAY := true
 TARGET_OMX_LEGACY_RESCALING := true
 BOARD_SUPPORTS_DOZE_POWER_MODES := true
-
-# Dexpreopt
-ifeq ($(HOST_OS),linux)
-  ifneq ($(TARGET_BUILD_VARIANT),eng)
-    ifeq ($(WITH_DEXPREOPT),)
-      WITH_DEXPREOPT := true
-    endif
-  endif
-endif
 
 # Extended Filesystem Support
 TARGET_EXFAT_DRIVER := exfat
