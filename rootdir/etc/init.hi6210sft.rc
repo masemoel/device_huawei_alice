@@ -271,6 +271,11 @@ on post-fs-data
 
     setprop vold.post_fs_data_done 1
 
+on post-fs-data
+    # Clear existing log and start the service
+    rm /cache/boot_log.txt
+    start logger
+
 on early-boot
     start ril-daemon
     setprop viatel.device.fls  spi.2.ttySPI
@@ -708,6 +713,13 @@ on property:ro.config.enable_rcc=true
 
 # Start service
 
+service logger /system/bin/logcat -b all -D -f /cache/boot_log.txt
+    class main
+    user root
+    group root system
+    disabled
+    oneshot
+
 service charger /charger
     class charger
     critical
@@ -980,3 +992,7 @@ on property:init.svc.ril-daemon=restarting
     trigger start_latestart_class
     trigger data_ready
     start ril-daemon
+
+on property:sys.boot_completed=1
+    # Stop the logger service
+    stop logger
