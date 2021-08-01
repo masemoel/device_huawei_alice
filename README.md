@@ -9,7 +9,7 @@ This device tree is intended to be used with this kernel repo:
 
 https://github.com/masemoel/kernel_huawei_hi6210sft
 
-branch: crDroid_n
+branch: crDroid-N
 
 --> Vendor <--
 
@@ -17,7 +17,7 @@ This device tree is intented to be used with this vendor repo:
 
 https://github.com/masemoel/vendor_huawei_alice
 
-branch: crDroid_n
+branch: crDroid-N
 
 --> Manifest <--
 
@@ -33,7 +33,7 @@ Download crDroid's source and alice's required stuff (see my attached manifest).
 ```bash
 . build/envsetup.sh
 lunch lineage_alice-userdebug
-mka bacon
+make bacon
 ```
 NOTE: patches will automatically be applied when running envsetup.sh .
 
