@@ -151,7 +151,8 @@ BOARD_RIL_CLASS := ../../../device/huawei/alice/ril
 PROTOBUF_SUPPORTED := true
 SIM_COUNT := 2
 
-# Optimizations 
+# Optimizations
+ENABLE_SCHEDBOOST := true
 O3_OPTS := true
 GRAPHITE_OPTS := true
 
